@@ -31,10 +31,8 @@ class ProductoController {
              return response.json(validation.messages(),400) 
          }
 
-        await producto.create(input)
-
         if (producto.create(input)){
-        return response.json(['Insertado',await producto.create(input)],201)
+        return response.json(['Insertado'],201)
         }
     }
 

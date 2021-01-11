@@ -26,7 +26,7 @@ Route.get('/', () => {
 // Get productos con parametros opcionales ID
 Route.get('productos/:id?','ProductoController.elGet')
 // Post productos
-Route.post('productos/','ProductoController.elPost')//.middleware(['cantidad'])
+Route.post('productos/','ProductoController.elPost').middleware(['cantidad'])
 // Update productos por parametro ID
 Route.put('productos/:id','ProductoController.elUpdate')
 // Delete productos por parametro ID

@@ -4,16 +4,17 @@ const producto= use('App/Models/Producto')
 const {validateAll} = use ('Validator')
 
 class ProductoController {
+    
     ///////////////////////////////////////////
     // TRAE TODOS LOS REGISTROS
     async elGet({response,params=id}){
         if (params.id)
         {
-            return response.json(['Productor por ID',await producto.findOrFail(params.id)],200) 
+            return response.status(200).json(['Productor por ID',await producto.findOrFail(params.id)]) 
         }
         else
         {
-           return response.json(['Productos',await producto.all()],200)
+           return response.status(200).json(['Productos-General',await producto.all()])
         }
     }
 
@@ -28,11 +29,11 @@ class ProductoController {
              'producto':'required|min:2|max:100|unique:productos,producto'
          })
          if(validation.fails()){
-             return response.json(validation.messages(),400) 
+             return response.status(400).json(validation.messages())
          }
-
+                   
         if (producto.create(input)){
-        return response.json(['Insertado'],201)
+        return response.status(201).json(['Insertado'])
         }
     }
 
@@ -47,13 +48,13 @@ class ProductoController {
              'producto':'required|min:2|max:100|unique:productos,producto'
          })
          if(validation.fails()){
-             return response.json(validation.messages(),400) 
+             return response.status(400).json(validation.messages()) 
          }
 
         await producto.query().where('id',params.id).update(input)
 
         if (producto.query().where('id',params.id).update(input)){
-        return response.json(['Actualizado',await producto.findOrFail(params.id)],200)
+        return response.status(200).json(['Actualizado',await producto.findOrFail(params.id)])
         }
     }
 
@@ -65,7 +66,7 @@ class ProductoController {
         await Productos.delete()
 
         if (Productos.delete()){
-            return response.json(['Eliminado'],200)
+            return response.status(200).json(['Eliminado'])
         }
     }
 }

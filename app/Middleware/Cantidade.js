@@ -4,22 +4,21 @@ const Request = require('@adonisjs/framework/src/Request')
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const geoip=require('geoip-lite')
-
 class Cantidade {
   /**
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Function} next
    */
-  async handle ({ request }, next,response) {
+  async handle ({ request, response }, next) {
     // call next to advance the request
-    
-    const edad = request.edad()
-    if (edad <18){
-      return await response.json({message:"eeeee"}) 
+
+    if (request.header('cantidad') >= 3){
+       await next()
     }
-    await next()
+    else{
+    return response.status(400).json({mensaje:'Cantidad minima en el header 2'})
+   }
   }
 }
 
